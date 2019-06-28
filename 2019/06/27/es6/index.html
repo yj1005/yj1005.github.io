@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ES6 - 杨小贱</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="(只说常用的我用的，不详细还见谅)
+1.变量声明const和letES5是只存在用var关键字去声明变量的，var本身存在一个变量提升的功能，就是不论在哪里声明，都会在函数的最顶部，如果不在函数内的,"> 
+    <meta name="author" content="杨 健"> 
+    <link rel="alternative" href="atom.xml" title="杨小贱" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">杨小贱</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">ES6</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">ES6</h1>
+        <div class="stuff">
+            <span>六月 27, 2019</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>(只说常用的我用的，不详细还见谅)</p>
+<h3 id="1-变量声明const和let"><a href="#1-变量声明const和let" class="headerlink" title="1.变量声明const和let"></a>1.变量声明const和let</h3><p>ES5是只存在用var关键字去声明变量的，var本身存在一个变量提升的功能，就是不论在哪里声明，都会在函数的最顶部，如果不在函数内的话，就会在全局作用域的最顶部。而let和const都是一种块级作用域，那什么是块级作用域呢？举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">function</span> <span class="function"><span class="title">aa</span></span>() &#123;</span><br><span class="line">    <span class="keyword">if</span>(flag) &#123;</span><br><span class="line">       <span class="built_in">let</span> <span class="built_in">test</span> = <span class="string">'hello man'</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        // <span class="built_in">test</span> 在此处访问不到</span><br><span class="line">        console.log(<span class="built_in">test</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // <span class="built_in">let</span> 的作用域是在它所在当前代码块，但不会被提升到当前函数的最顶部</span><br></pre></td></tr></table></figure>
+
+<p>let表示变量，const表示常量，只要在｛｝花括号里的就可以认为是let和const的作用域。</p>
+<h3 id="2-字符串"><a href="#2-字符串" class="headerlink" title="2.字符串"></a>2.字符串</h3><p>ES5中我们都是用“+”号去拼接字符串的，ES6中我们可以采用${}去拼接。举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//ES5 </span><br><span class="line">    var name = <span class="string">'小明'</span></span><br><span class="line">    console.log(<span class="string">'hello'</span> + name)</span><br><span class="line">//ES6</span><br><span class="line">    const name = <span class="string">'小明'</span></span><br><span class="line">    console.log(`hello <span class="variable">$&#123;name&#125;</span>`) //hello 小明</span><br></pre></td></tr></table></figure>
+
+<p>然后说一些稍微常见的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 1.includes：判断是否包含然后直接返回布尔值</span><br><span class="line">const str = <span class="string">'hahay'</span></span><br><span class="line">console.log(str.includes(<span class="string">'y'</span>)) // <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">// 2.repeat: 获取字符串重复n次</span><br><span class="line">const str = <span class="string">'he'</span></span><br><span class="line">console.log(str.repeat(3)) // <span class="string">'hehehe'</span></span><br><span class="line">//如果你带入小数, Math.floor(num) 来处理</span><br><span class="line">// s.repeat(3.1) 或者 s.repeat(3.9) 都当做成 s.repeat(3) 来处理</span><br><span class="line"></span><br><span class="line">// 3. startsWith 和 endsWith 判断是否以 给定文本 开始或者结束</span><br><span class="line">const str =  <span class="string">'hello world!'</span></span><br><span class="line">console.log(str.startsWith(<span class="string">'hello'</span>)) // <span class="literal">true</span></span><br><span class="line">console.log(str.endsWith(<span class="string">'!'</span>)) // <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">// 4. padStart 和 padEnd 填充字符串，应用场景：时分秒</span><br><span class="line">setInterval(() =&gt; &#123;</span><br><span class="line">    const now = new Date()</span><br><span class="line">    const hours = now.getHours().toString()</span><br><span class="line">    const minutes = now.getMinutes().toString()</span><br><span class="line">    const seconds = now.getSeconds().toString()</span><br><span class="line">    console.log(`<span class="variable">$&#123;hours.padStart(2, 0)&#125;</span>:<span class="variable">$&#123;minutes.padStart(2, 0)&#125;</span>:<span class="variable">$&#123;seconds.padStart(2, 0)&#125;</span>`)</span><br><span class="line">&#125;, 1000)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-箭头函数"><a href="#3-箭头函数" class="headerlink" title="3.箭头函数"></a>3.箭头函数</h3><p>ES6中我觉得最好玩的应该就是箭头函数了，它有三个特点：不需要 function 关键字来创建函数，省略 return 关键字，继承当前上下文的 this 关键字。举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//例如：</span><br><span class="line">    [1,2,3].map(x =&gt; x + 1)</span><br><span class="line">    </span><br><span class="line">//等同：</span><br><span class="line">    [1,2,3].map((<span class="keyword">function</span>(x)&#123;</span><br><span class="line">        <span class="built_in">return</span> x + 1</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>More info <a href="httpshexo.iodocsgenerating.html">Generating</a></p>
+<h3 id="4-浅复制"><a href="#4-浅复制" class="headerlink" title="4.浅复制"></a>4.浅复制</h3><p>ES6中对象提供了Object.assign()这个方法来实现浅复制，他会把任意多个源对象自身可枚举的属性拷贝给目标对象，然后返回目标对象，所以尽量先定义个空对象。举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const objA = &#123; name: <span class="string">'小明'</span>, age: 18 &#125;</span><br><span class="line">const objB = &#123; address: <span class="string">'合肥'</span> &#125;</span><br><span class="line">const objC = &#123;&#125; // 这个为目标对象</span><br><span class="line">const obj = Object.assign(objC, objA, objB)</span><br><span class="line">// 打印 objA objB objC obj 输出看看</span><br><span class="line">console.log(objA)   // &#123; name: <span class="string">'小明'</span>, age: 18 &#125;</span><br><span class="line">console.log(objB) // &#123; address: <span class="string">'合肥'</span> &#125;</span><br><span class="line">console.log(objC) // &#123; name: <span class="string">'小明'</span>, age: 18, address: <span class="string">'合肥'</span> &#125;</span><br><span class="line">console.log(obj) // &#123; name: <span class="string">'小明'</span>, age: 18, address: <span class="string">'合肥'</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-展开运算符（俗称。。。三个点）"><a href="#5-展开运算符（俗称。。。三个点）" class="headerlink" title="5.展开运算符（俗称。。。三个点）"></a>5.展开运算符（俗称。。。三个点）</h3><p>ES6中提供…，没错就是…，三个点就是一个方法哈哈哈，可以用在组装处理对象或者数组。举个例子：</p>
+<p>组装对象或者数组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//数组</span><br><span class="line">const color = [<span class="string">'red'</span>, <span class="string">'yellow'</span>]</span><br><span class="line">const colorful = [...color, <span class="string">'green'</span>, <span class="string">'pink'</span>]</span><br><span class="line">console.log(colorful) //[red, yellow, green, pink]</span><br><span class="line"></span><br><span class="line">//对象</span><br><span class="line">const alp = &#123; fist: <span class="string">'a'</span>, second: <span class="string">'b'</span>&#125;</span><br><span class="line">const alphabets = &#123; ...alp, third: <span class="string">'c'</span> &#125;</span><br><span class="line">console.log(alphabets) //&#123; <span class="string">"fist"</span>: <span class="string">"a"</span>, <span class="string">"second"</span>: <span class="string">"b"</span>, <span class="string">"third"</span>: <span class="string">"c"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我不知道你们咋想的，我觉得和浅复制好像啊！！！</p>
+<p>有时候我们想获取数组或者对象除了前几项或者除了某几项的其他项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//数组</span><br><span class="line">const number = [1,2,3,4,5]</span><br><span class="line">const [first, ...rest] = number</span><br><span class="line">console.log(rest) //2,3,4,5</span><br><span class="line">//对象</span><br><span class="line">const user = &#123;</span><br><span class="line">    username: <span class="string">'lux'</span>,</span><br><span class="line">    gender: <span class="string">'female'</span>,</span><br><span class="line">    age: 19,</span><br><span class="line">    address: <span class="string">'peking'</span></span><br><span class="line">&#125;</span><br><span class="line">const &#123; username, ...rest &#125; = user</span><br><span class="line">console.log(rest) //&#123;<span class="string">"address"</span>: <span class="string">"peking"</span>, <span class="string">"age"</span>: 19, <span class="string">"gender"</span>: <span class="string">"female"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于 Object 而言，还可以用于组合成新的 Object 。当然如果有重复的属性名，右边覆盖左边。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const first = &#123;</span><br><span class="line">    a: 1,</span><br><span class="line">    b: 2,</span><br><span class="line">    c: 6,</span><br><span class="line">&#125;</span><br><span class="line">const second = &#123;</span><br><span class="line">    c: 3,</span><br><span class="line">    d: 4</span><br><span class="line">&#125;</span><br><span class="line">const total = &#123; ...first, ...second &#125;</span><br><span class="line">console.log(total) // &#123; a: 1, b: 2, c: 3, d: 4 &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-import-和-export"><a href="#6-import-和-export" class="headerlink" title="6.import 和 export"></a>6.import 和 export</h3><p>ES6中提供import导入模块、export导出模块。举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//全部导入</span><br><span class="line">import people from <span class="string">'./example'</span></span><br><span class="line"></span><br><span class="line">//有一种特殊情况，即允许你将整个模块当作单一对象进行导入</span><br><span class="line">//该模块的所有导出都会作为对象的属性存在</span><br><span class="line">import * as example from <span class="string">"./example.js"</span></span><br><span class="line">console.log(example.name)</span><br><span class="line">console.log(example.age)</span><br><span class="line">console.log(example.getName())</span><br><span class="line"></span><br><span class="line">//导入部分</span><br><span class="line">import &#123;name, age&#125; from <span class="string">'./example'</span></span><br><span class="line"></span><br><span class="line">// 导出默认, 有且只有一个默认</span><br><span class="line"><span class="built_in">export</span> default App</span><br><span class="line"></span><br><span class="line">// 部分导出</span><br><span class="line"><span class="built_in">export</span> class App extend Component &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>导入的时候有没有大括号的区别是什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.当用<span class="built_in">export</span> default people导出时，就用 import people 导入（不带大括号）</span><br><span class="line"></span><br><span class="line">2.一个文件里，有且只能有一个<span class="built_in">export</span> default。但可以有多个<span class="built_in">export</span>。</span><br><span class="line"></span><br><span class="line">3.当用<span class="built_in">export</span> name 时，就用import &#123; name &#125;导入（记得带上大括号）</span><br><span class="line"></span><br><span class="line">4.当一个文件里，既有一个<span class="built_in">export</span> default people, 又有多个<span class="built_in">export</span> name 或者 <span class="built_in">export</span> age时，导入就用 import people, &#123; name, age &#125; </span><br><span class="line"></span><br><span class="line">5.当一个文件里出现n多个 <span class="built_in">export</span> 导出很多模块，导入时除了一个一个导入，也可以用import * as example</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Promise"><a href="#7-Promise" class="headerlink" title="7.Promise"></a>7.Promise</h3><p>ES6中的重点，放在这个位置讲，没什么特别的，就是唉，只有自己的理解。官方解释如下：在promise之前代码过多的回调或者嵌套，可读性差、耦合度高、扩展性低。通过Promise机制，扁平化的代码机构，大大提高了代码可读性；用同步编程的方式来编写异步代码，保存线性的代码逻辑，极大的降低了代码耦合性而提高了程序的可扩展性。（我总结下用同步的方式去写异步代码）举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'/api/todos'</span>)</span><br><span class="line">  .<span class="keyword">then</span>(res =&gt; res.json())</span><br><span class="line">  .<span class="keyword">then</span>(data =&gt; (&#123; data &#125;))</span><br><span class="line">  .catch(err =&gt; (&#123; err &#125;));</span><br></pre></td></tr></table></figure>
+
+<p>具体得了解清楚then，catch</p>
+<h3 id="8-更方便的数据访问–解构"><a href="#8-更方便的数据访问–解构" class="headerlink" title="8.更方便的数据访问–解构"></a>8.更方便的数据访问–解构</h3><p>ES6中数组和对象是JS中最常用也是最重要表示形式。为了简化提取信息，ES6新增了解构，这是将一个数据结构分解为更小的部分的过程，举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 请使用 ES6 重构一下代码</span><br><span class="line"></span><br><span class="line">// 第一题</span><br><span class="line">var jsonParse = require(<span class="string">'body-parser'</span>).jsonParse</span><br><span class="line"></span><br><span class="line">// 第二题</span><br><span class="line">var body = request.body</span><br><span class="line">var username = body.username</span><br><span class="line">var password = body.password</span><br><span class="line">    </span><br><span class="line">//答案</span><br><span class="line">// 1.</span><br><span class="line">import &#123; jsonParse &#125; from <span class="string">'body-parser'</span></span><br><span class="line">// 2. </span><br><span class="line">const &#123; body, body: &#123; username, password &#125; &#125; = request</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
