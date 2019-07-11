@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>节流、防抖 - 杨小贱</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1.节流节流的原理很简单：
+如果你持续触发事件，每隔一段时间，只执行一次事件。根据首次是否执行以及结束后是否执行，效果有所不同，实现的方式也有所不同。换句话来说就是，我有一个区间，这个区间是从0到N,"> 
+    <meta name="author" content="杨 健"> 
+    <link rel="alternative" href="atom.xml" title="杨小贱" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">杨小贱</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">节流、防抖</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">节流、防抖</h1>
+        <div class="stuff">
+            <span>七月 11, 2019</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="1-节流"><a href="#1-节流" class="headerlink" title="1.节流"></a>1.节流</h2><p>节流的原理很简单：</p>
+<p>如果你持续触发事件，每隔一段时间，只执行一次事件。根据首次是否执行以及结束后是否执行，效果有所不同，实现的方式也有所不同。<code>换句话来说就是，我有一个区间，这个区间是从0到N，假设我们当N是10秒，我一个事件触发的时候，这个时间计作X秒，然后判断X是不是在0-10秒内，在的话就不执行，不在那就一定是大于10秒了，那么不好意思，老板，再执行一次。然后继续0-10秒，和X秒去判断。</code>关于节流的实现，有两种主流的实现方式，一种是使用时间戳，一种是设置定时器。</p>
+<p>方法1：使用时间戳</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> throttle(func, <span class="built_in">wait</span>) &#123;</span><br><span class="line">    var context, args;</span><br><span class="line">    var previous = 0;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        var now = +new Date();</span><br><span class="line">        context = this;</span><br><span class="line">        args = arguments;</span><br><span class="line">        <span class="keyword">if</span> (now - previous &gt; <span class="built_in">wait</span>) &#123;</span><br><span class="line">            func.apply(context, args);</span><br><span class="line">            previous = now;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">container.onmousemove = throttle(getUserAction, 1000);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/mqyqingfeng/Blog/master/Images/throttle/throttle1.gif" alt="cmd-markdown-logo"></p>
+<p>我们可以看到：当鼠标移入的时候，事件立刻执行，每过 1s 会执行一次，如果在 4.2s 停止触发，以后不会再执行事件。</p>
+<p>方法2：定时器。</p>
+<p>当触发事件的时候，我们设置一个定时器，再触发事件的时候，如果定时器存在，就不执行，直到定时器执行，然后执行函数，清空定时器，这样就可以设置下个定时器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> throttle(func, <span class="built_in">wait</span>) &#123;</span><br><span class="line">    var timeout;</span><br><span class="line">    var previous = 0;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        context = this;</span><br><span class="line">        args = arguments;</span><br><span class="line">        <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">            timeout = setTimeout(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">                timeout = null;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;, <span class="built_in">wait</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了让效果更加明显，我们设置 wait 的时间为 3s，效果演示如下:<br><img src="https://github.com/mqyqingfeng/Blog/raw/master/Images/throttle/throttle2.gif" alt="cmd-markdown-logo"></p>
+<p>我们可以看到：当鼠标移入的时候，事件不会立刻执行，晃了 3s 后终于执行了一次，此后每 3s 执行一次，当数字显示为 3 的时候，立刻移出鼠标，相当于大约 9.2s 的时候停止触发，但是依然会在第 12s 的时候执行一次事件。</p>
+<p>所以比较两个方法：</p>
+<p>第一种事件会立刻执行，第二种事件会在 n 秒后第一次执行<br>第一种事件停止触发后没有办法再执行事件，第二种事件停止触发后依然会再执行一次事件</p>
+<!-- More info [Writing](httpshexo.iodocswriting.html) -->
+
+<h2 id="2-防抖"><a href="#2-防抖" class="headerlink" title="2.防抖"></a>2.防抖</h2><p>在前端开发中会遇到一些频繁的事件触发，比如：window 的 resize、scroll、mousedown、mousemove、keyup、keydown。</p>
+<p><img src="https://raw.githubusercontent.com/mqyqingfeng/Blog/master/Images/debounce/debounce.gif" alt="cmd-markdown-logo"></p>
+<p>从左滑动到右边，onmousemove 一共触发了165次，如果不是onmousemove，而是一个ajax请求呢，一秒触发165次什么概念，页面会直接卡死，必须等这165个请求全部完成了，才能进行下一步，很影响用户的体验，这里我们说一个解决办法，debounce防抖。</p>
+<p>debounce(防抖)，原理：你尽管触发事件，但是我一定在事件触发 n 秒后才执行，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行，总之，就是要等你触发完事件 n 秒内不再触发事件，我才执行，真是任性呐!是不是很好理解，<code>换句话说就是，我一个事件触发后，比如n为5秒，5秒之后，我就会执行这个时间，但是这5秒麻烦你不要动这个事件，只要你动了，不好意思，老板，重新来5秒</code>。</p>
+<p>举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> debounce(func, <span class="built_in">wait</span>) &#123;</span><br><span class="line">    var timeout;</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        clearTimeout(timeout)</span><br><span class="line">        timeout = setTimeout(func, <span class="built_in">wait</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">container.onmousemove = debounce(getUserAction, 1000);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/mqyqingfeng/Blog/master/Images/debounce/debounce-1.gif" alt="cmd-markdown-logo"></p>
+<p>现在随你怎么移动，反正你移动完 1000ms 内不再触发，我才执行事件，顿时就从 165 次降低成了 1 次！到这里就完成了初步的防抖操作。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='https://link.hhtjim.com/kg/B695716764E37FC9781CB8C15FC382EB.mp3'></li>
+                    
+                        <li title='2' data-url='https://link.hhtjim.com/kw/41251341.mp3'></li>
+                    
+                        <li title='3' data-url='https://link.hhtjim.com/kg/B2E6A23DEE66FC4D2978970063CBC85C.mp3'></li>
+                    
+                        <li title='4' data-url='https://link.hhtjim.com/kg/E1FF6FD76B09D6DE4DD83DF12CA0D53E.mp3'></li>
+                    
+                        <li title='5' data-url='https://link.hhtjim.com/kg/96E064A41AB84EBE4C03C6AAE3CB9334.mp3'></li>
+                    
+                        <li title='6' data-url='https://link.hhtjim.com/kg/E62BCE3CF8F797A31B09E526C88E02BA.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
