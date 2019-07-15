@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>性能优化 - 杨小贱</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="
+性能优化的目的无非是减少用户流量消耗，提升用户首屏体验，提升用户访问速度，让用户专注内容本身。(只说常用的我用的，不详细还请见谅)
+1.如何优化SPA应用的首屏加载速度慢的问题
+*将公用的JS库通,"> 
+    <meta name="author" content="杨 健"> 
+    <link rel="alternative" href="atom.xml" title="杨小贱" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">杨小贱</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">性能优化</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">性能优化</h1>
+        <div class="stuff">
+            <span>七月 15, 2019</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <!-- ## 优化 -->
+<p>性能优化的目的无非是减少用户流量消耗，提升用户首屏体验，提升用户访问速度，让用户专注内容本身。<br>(只说常用的我用的，不详细还请见谅)</p>
+<h3 id="1-如何优化SPA应用的首屏加载速度慢的问题"><a href="#1-如何优化SPA应用的首屏加载速度慢的问题" class="headerlink" title="1.如何优化SPA应用的首屏加载速度慢的问题"></a>1.如何优化SPA应用的首屏加载速度慢的问题</h3><blockquote>
+<p>*将公用的JS库通过script标签外部引入，减小 app.bundel 的大小，让浏览器并行下载资源文件，提高下载速度；</p>
+<p>*在配置 路由时，页面和组件使用懒加载的方式引入，进一步缩小 app.bundel 的体积，在调用某个组件时再加载对应的js文件；</p>
+<p>*加一个首屏loading图，提升用户体验</p>
+</blockquote>
+<h3 id="2-前端如何优化网站性能"><a href="#2-前端如何优化网站性能" class="headerlink" title="2.前端如何优化网站性能"></a>2.前端如何优化网站性能</h3><pre><code>1、减少 HTTP 请求数量
+在浏览器与服务器进行通信时，主要是通过 HTTP 进行通信。浏览器与服务器需要经过三次握手，每次握手需要花费大量时间。而且不同浏览器对资源文件并发请求数量有限（不同浏览器允许并发数），一旦 HTTP 请求数量达到一定数量，资源请求就存在等待状态，这是很致命的，因此减少 HTTP 的请求数量可以很大程度上对网站性能进行优化
+2.CSS精灵，这是将多张图片合并成一张图片达到减少HTTP请求的一种解决方案，可以通过CSS的background属性来访问图片内容。这种方案同时还可以减少图片总字节数
+3.合并 CSS 和 JS 文件，现在前端有很多工程化打包工具，如：grunt、gulp、webpack等。为了减少 HTTP 请求数量，可以通过这些工具再发布前将多个CSS或者多个JS合并成一个文件
+4.懒加载，可以控制网页上的内容在一开始无需加载，不需要发请求，等到用户操作真正需要的时候立即加载出内容。这样就控制了网页资源一次性请求数量</code></pre><h3 id="3-控制资源文件加载优先级"><a href="#3-控制资源文件加载优先级" class="headerlink" title="3.控制资源文件加载优先级"></a>3.控制资源文件加载优先级</h3><p>浏览器在加载HTML内容时，是将HTML内容从上至下依次解析，解析到link或者script标签就会加载href或者src对应链接内容，为了第一时间展示页面给用户，就需要将CSS提前加载，不要受 JS 加载影响。<code>一般情况下都是CSS在头部，JS在底部</code></p>
+<h3 id="4-利用浏览器缓存"><a href="#4-利用浏览器缓存" class="headerlink" title="4.利用浏览器缓存"></a>4.利用浏览器缓存</h3><p>浏览器缓存是将网络资源存储在本地，等待下次请求该资源时，如果资源已经存在就不需要到服务器重新请求该资源，直接在本地读取该资源。</p>
+<h3 id="5-减少重排（Reflow）"><a href="#5-减少重排（Reflow）" class="headerlink" title="5.减少重排（Reflow）"></a>5.减少重排（Reflow）</h3><p>基本原理：重排是DOM的变化影响到了元素的几何属性（宽和高），浏览器会重新计算元素的几何属性，会使渲染树中受到影响的部分失效，浏览器会验证 DOM 树上的所有其它结点的visibility属性，这也是Reflow低效的原因。如果Reflow的过于频繁，CPU使用率就会急剧上升。</p>
+<p>减少Reflow，<code>如果需要在DOM操作时添加样式，尽量使用 增加class属性，而不是通过style操作样式。</code></p>
+<h3 id="6-减少-DOM-操作"><a href="#6-减少-DOM-操作" class="headerlink" title="6.减少 DOM 操作"></a>6.减少 DOM 操作</h3><h3 id="7-图标使用-IconFont-替换-阿里矢量图形库"><a href="#7-图标使用-IconFont-替换-阿里矢量图形库" class="headerlink" title="7.图标使用 IconFont 替换(阿里矢量图形库)"></a>7.图标使用 IconFont 替换(阿里矢量图形库)</h3><h3 id="8-网页从输入网址到渲染完成经历了哪些过程"><a href="#8-网页从输入网址到渲染完成经历了哪些过程" class="headerlink" title="8.网页从输入网址到渲染完成经历了哪些过程"></a>8.网页从输入网址到渲染完成经历了哪些过程</h3><pre><code>大致可以分为如下7步：
+
+    1.输入网址；
+
+    2.发送到DNS服务器，并获取域名对应的web服务器对应的ip地址；
+
+    3与web服务器建立TCP连接；
+
+    4.浏览器向web服务器发送http请求；
+
+    5.web服务器响应请求，并返回指定url的数据（或错误信息，或重定向的新的url地址）；
+
+    6.浏览器下载web服务器返回的数据及解析html源文件；
+
+    7.生成DOM树，解析css和js，渲染页面，直至显示完成；</code></pre>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='https://link.hhtjim.com/kg/B695716764E37FC9781CB8C15FC382EB.mp3'></li>
+                    
+                        <li title='2' data-url='https://link.hhtjim.com/kw/41251341.mp3'></li>
+                    
+                        <li title='3' data-url='https://link.hhtjim.com/kg/B2E6A23DEE66FC4D2978970063CBC85C.mp3'></li>
+                    
+                        <li title='4' data-url='https://link.hhtjim.com/kg/E1FF6FD76B09D6DE4DD83DF12CA0D53E.mp3'></li>
+                    
+                        <li title='5' data-url='https://link.hhtjim.com/kg/96E064A41AB84EBE4C03C6AAE3CB9334.mp3'></li>
+                    
+                        <li title='6' data-url='https://link.hhtjim.com/kg/E62BCE3CF8F797A31B09E526C88E02BA.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
